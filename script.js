@@ -16,13 +16,14 @@ images.forEach(image => {
     draggedElement = null; // Reset the dragged element
   });
 
-  // When dragging over another image div
+  // Allow dropping by preventing the default action
   image.addEventListener('dragover', (e) => {
-    e.preventDefault(); // Allow dropping by preventing the default action
+    e.preventDefault();
   });
 
-  // When an image div is dropped on another image div
+  // When the image is dropped on another image, swap the images
   image.addEventListener('drop', (e) => {
+    e.preventDefault();
     if (draggedElement !== e.target) {
       // Swap the background images of the dragged element and the target element
       let tempBackground = draggedElement.style.backgroundImage;
@@ -31,4 +32,5 @@ images.forEach(image => {
     }
   });
 });
+
 
