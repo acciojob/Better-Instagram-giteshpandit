@@ -1,49 +1,37 @@
 body {
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .flex {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  gap: 20px;
   margin-top: 30px;
 }
 
 .image {
-  height: 300px;
-  width: 200px;
-  margin: 20px;
-  border: 3px solid #333;
-  background-size: cover;
+  width: 150px;
+  height: 150px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  border: 2px solid #ccc;
   cursor: grab;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-/* Background images for each image container */
-#drag1 {
-  background-image: url("https://picsum.photos/id/237/200/300");
+.image:hover {
+  background-color: #ddd;
 }
 
-#drag2 {
-  background-image: url("https://picsum.photos/seed/picsum/200/300");
+.image:active {
+  cursor: grabbing;
 }
-
-#drag3 {
-  background-image: url("https://picsum.photos/200/300?grayscale");
-}
-
-#drag4 {
-  background-image: url("https://picsum.photos/200/300/");
-}
-
-#drag5 {
-  background-image: url("https://picsum.photos/200/300.jpg");
-}
-
-#drag6 {
-  background-image: url("https://picsum.photos/id/102/200/300");
-}
-
-.selected {
-  border: 5px solid rgb(0, 195, 255);
-}
-

@@ -19,11 +19,15 @@ draggables.forEach(draggable => {
     const draggedId = e.dataTransfer.getData('text/plain');
     const droppedElement = e.target;
 
-    // Swap the content (images or text) of the dragged and dropped elements
+    // Ensure that we are swapping two different divs
     if (draggedElement !== droppedElement) {
-      const temp = draggedElement.innerHTML;
-      draggedElement.innerHTML = droppedElement.innerHTML;
-      droppedElement.innerHTML = temp;
+      // Swap the content of the dragged and dropped elements
+      const draggedHTML = document.getElementById(draggedId).innerHTML;
+      const droppedHTML = droppedElement.innerHTML;
+
+      // Swap the innerHTML
+      document.getElementById(draggedId).innerHTML = droppedHTML;
+      droppedElement.innerHTML = draggedHTML;
     }
   });
 });
