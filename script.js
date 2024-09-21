@@ -1,36 +1,32 @@
-//your code here
-const images = document.querySelectorAll('.image');
+const draggables = document.querySelectorAll('.image');
 let draggedElement = null;
 
-// Add event listeners to each image div
-images.forEach(image => {
-  // When dragging starts
-  image.addEventListener('dragstart', (e) => {
-    draggedElement = e.target; // Store the element being dragged
-    e.target.classList.add('selected'); // Add a visual indication that it's selected
+// Event listener for drag start
+draggables.forEach(draggable => {
+  draggable.addEventListener('dragstart', (e) => {
+    draggedElement = e.target; // Store the dragged element
+    e.dataTransfer.setData('text/plain', draggedElement.id); // Store the id of the dragged element
   });
 
-  // When dragging ends
-  image.addEventListener('dragend', () => {
-    draggedElement.classList.remove('selected'); // Remove the visual indication
-    draggedElement = null; // Reset the dragged element
-  });
-
-  // Allow dropping by preventing the default action
-  image.addEventListener('dragover', (e) => {
+  // Prevent default behavior on dragover
+  draggable.addEventListener('dragover', (e) => {
     e.preventDefault();
   });
 
-  // When the image is dropped on another image, swap the images
-  image.addEventListener('drop', (e) => {
+  // Handle drop event
+  draggable.addEventListener('drop', (e) => {
     e.preventDefault();
-    if (draggedElement !== e.target) {
-      // Swap the background images of the dragged element and the target element
-      let tempBackground = draggedElement.style.backgroundImage;
-      draggedElement.style.backgroundImage = e.target.style.backgroundImage;
-      e.target.style.backgroundImage = tempBackground;
+    const draggedId = e.dataTransfer.getData('text/plain');
+    const droppedElement = e.target;
+
+    // Swap the content (images or text) of the dragged and dropped elements
+    if (draggedElement !== droppedElement) {
+      const temp = draggedElement.innerHTML;
+      draggedElement.innerHTML = droppedElement.innerHTML;
+      droppedElement.innerHTML = temp;
     }
   });
 });
+
 
 
