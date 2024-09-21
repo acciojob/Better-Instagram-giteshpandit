@@ -1,36 +1,38 @@
-const draggables = document.querySelectorAll('.image');
-let draggedElement = null;
+ const draggables = document.querySelectorAll(".draggable");
+      let draggedItem = null;
 
-// Event listener for drag start
-draggables.forEach(draggable => {
-  draggable.addEventListener('dragstart', (e) => {
-    draggedElement = e.target; // Store the dragged element
-    e.dataTransfer.setData('text/plain', draggedElement.id); // Store the id of the dragged element
-  });
+      draggables.forEach((draggable) => {
+        // When dragging starts
+        draggable.addEventListener("dragstart", (e) => {
+          draggedItem = e.target;
+          // Hide the item being dragged for better UI feedback
+          setTimeout(() => {
+            e.target.style.opacity = "0.5"; // Making it semi-transparent for better visibility
+          }, 0);
+        });
 
-  // Prevent default behavior on dragover
-  draggable.addEventListener('dragover', (e) => {
-    e.preventDefault();
-  });
+        // When dragging ends
+        draggable.addEventListener("dragend", (e) => {
+          setTimeout(() => {
+            e.target.style.opacity = "1"; // Restore the item to full visibility
+          }, 0);
+          draggedItem = null; // Clear the dragged item
+        });
 
-  // Handle drop event
-  draggable.addEventListener('drop', (e) => {
-    e.preventDefault();
-    const draggedId = e.dataTransfer.getData('text/plain');
-    const droppedElement = e.target;
+        // Allowing the dragover event (necessary to enable dropping)
+        draggable.addEventListener("dragover", (e) => {
+          e.preventDefault(); // Prevent the default to allow drop
+        });
 
-    // Ensure that we are swapping two different divs
-    if (draggedElement !== droppedElement) {
-      // Swap the content of the dragged and dropped elements
-      const draggedHTML = document.getElementById(draggedId).innerHTML;
-      const droppedHTML = droppedElement.innerHTML;
-
-      // Swap the innerHTML
-      document.getElementById(draggedId).innerHTML = droppedHTML;
-      droppedElement.innerHTML = draggedHTML;
-    }
-  });
-});
-
-
-
+        // Handling the drop event
+        draggable.addEventListener("drop", (e) => {
+          e.preventDefault();
+          // Ensure that we're not swapping the element with itself
+          if (draggedItem !== e.target) {
+            // Swapping the background images of the dragged item and the drop target
+            let tempImage = draggedItem.src;
+            draggedItem.src = e.target.src;
+            e.target.src = tempImage;
+          }
+        });
+      });
